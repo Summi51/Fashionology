@@ -24,7 +24,7 @@ const ProductAdminCart = ({
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8080/products/delete/${id}`, {
+      .delete(`https://fashionology-omega.vercel.app//products/delete/${id}`, {
         headers: {
           "Content-Type": "application/json",
           " Authorization": `Bearer ${userData.token}`,

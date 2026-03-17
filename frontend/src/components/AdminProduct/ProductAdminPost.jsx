@@ -38,7 +38,7 @@ const ProductAdminPost = () => {
     e.preventDefault();
     // console.log(product, userData.token)
     axios
-      .post("http://localhost:8080/products/add", product, {
+      .post("https://fashionology-omega.vercel.app//products/add", product, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userData.token}`,

@@ -7,7 +7,7 @@ const TotalWeightProducts = () => {
   const [product, setProduct] = useState([]);
 
   const AllProducts = () => {
-    axios.get("http://localhost:8080/products").then((res) => {
+    axios.get("https://fashionology-omega.vercel.app//products").then((res) => {
       // console.log(res.data);
       setProduct(res.data);
     });

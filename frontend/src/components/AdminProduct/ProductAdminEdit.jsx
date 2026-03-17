@@ -50,7 +50,7 @@ const ProductAdminEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/products/${id}`)
+      .get(`https://fashionology-omega.vercel.app//products/${id}`)
       .then((res) => {
         // console.log(res.data);
         setData(res.data);

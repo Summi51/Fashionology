@@ -6,7 +6,7 @@ import { Footer } from "../components/Footer";
 import axios from "axios";
 import { EmptyCart } from "../components/EmptyCart";
 
-const url = "http://localhost:8080";
+const url = "https://fashionology-omega.vercel.app/";
 
 function Cart() {
   const [cart, setCart] = useState([]);

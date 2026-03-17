@@ -18,7 +18,7 @@ import { FaCreditCard, FaMapMarkerAlt } from "react-icons/fa";
 import { HiOutlineCurrencyDollar } from "react-icons/hi";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 
-const url = "http://localhost:8080/";
+const url = "https://fashionology-omega.vercel.app//";
 
 export const Checkout = () => {
   let cartData = JSON.parse(localStorage.getItem("cartData")) || null;

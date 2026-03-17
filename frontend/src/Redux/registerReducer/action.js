@@ -33,7 +33,7 @@ export const SignUp =
     } else {
       dispatch({ type: SignUp_REQUEST });
       axios
-        .post("http://localhost:8080/users/register", data)
+        .post("https://fashionology-omega.vercel.app//users/register", data)
         .then((res) => {
           console.log(res);
           dispatch({ type: SignUp_SUCCESS, payload: data });

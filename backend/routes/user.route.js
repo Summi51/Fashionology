@@ -23,8 +23,8 @@ userRouter.post("/register",(req,res) => {
     });   
 });
 
-// http://localhost:8080/users/login and
-//  http://localhost:8080/users/register
+// https://fashionology-omega.vercel.app//users/login and
+//  https://fashionology-omega.vercel.app//users/register
 
 // /   "role": "user", or "admin"
 // {
