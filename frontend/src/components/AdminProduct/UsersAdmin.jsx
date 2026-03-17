@@ -14,7 +14,7 @@ import AdminSidebar from "../../pages/AdminSidebar/AdminSidebar";
 
   const getUser = () => {
     axios
-      .get(`https://fashionology-omega.vercel.app//users/all`, {
+      .get(`https://fashionology-omega.vercel.app/users/all`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userData.token}`,
@@ -34,7 +34,7 @@ import AdminSidebar from "../../pages/AdminSidebar/AdminSidebar";
   //https://sleepy-erin-sheep.cyclic.app/users/delete/${id}
 
 const handleDelete = ( id) => {
-  axios.delete(`https://fashionology-omega.vercel.app//users/delete/${id}`, {
+  axios.delete(`https://fashionology-omega.vercel.app/users/delete/${id}`, {
     headers: {
       "Content-Type": "application/json",
       " Authorization": `Bearer ${userData.token}`,

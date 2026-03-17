@@ -8,7 +8,7 @@ import Carousel from "../components/Home-Components/Carousel";
 import { Footer } from "../components/Footer";
 import { useToast } from "@chakra-ui/react";
 
-const url = "https://fashionology-omega.vercel.app/";
+const url = "https://fashionology-omega.vercel.app";
 
 
 

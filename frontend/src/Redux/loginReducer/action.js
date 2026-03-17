@@ -14,7 +14,7 @@ export const login =
     } else {
       dispatch({ type: LOGIN_REQUEST });
       return axios
-        .post("https://fashionology-omega.vercel.app//users/login", userData)
+        .post("https://fashionology-omega.vercel.app/users/login", userData)
         .then((response) => {
           const userData = {
             token: response.data.token,
