@@ -56,7 +56,7 @@ function Cart() {
       return;
     }
     let newArr = cart.map((el, i) => {
-      if (el._id == id) {
+      if (el._id === id) {
         return { ...el, quantity: el.quantity - 1 };
       } else {
         return el;
@@ -67,7 +67,7 @@ function Cart() {
 
   function increment(id) {
     let newArr = cart.map((el, i) => {
-      if (el._id == id) {
+      if (el._id === id) {
         return { ...el, quantity: el.quantity + 1 };
       } else {
         return el;
@@ -120,7 +120,7 @@ function Cart() {
                         <span>Size:{el.size}</span>
                       </div>
                       <div className={styles.productimageDiv}>
-                        <img src={el.images[0]} alt="product image" />
+                        <img src={el.images[0]} alt={el.name} />
                       </div>
                       <div>
                         <div onClick={() => removeItem(el._id)}>

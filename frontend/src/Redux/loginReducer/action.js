@@ -25,7 +25,7 @@ export const login =
 
           dispatch({ type: LOGIN_SUCCESS, payload: userData });
       
-          if (userData.userRole == "admin") {
+          if (userData.userRole === "admin") {
             navigate("/adminhome",{ replace: true });
           }
           setEmail("");

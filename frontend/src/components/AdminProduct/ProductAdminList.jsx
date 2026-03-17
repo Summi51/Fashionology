@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { getProducts } from "../../Redux/productsReducers/action";
 import Nav from "../../pages/AdminNavbar";
-import AdminSidebar from "../../pages/AdminSidebar/AdminSidebar";
 import ProductAdminCart from "./ProductAdminCart";
 import Productpagination from "./Productpagination";
 
@@ -13,7 +12,7 @@ const ProductAdminList = () => {
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState("");
 
-  const [product, setProduct] = useState([]);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 

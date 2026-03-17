@@ -1,17 +1,16 @@
-import { ReactNode } from 'react';
 import { NavLink } from "react-router-dom";
 import {
   Box,
   Flex,
   Avatar,
-  Link,
+  
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
+  
   useColorModeValue,
   Stack,
   useColorMode,
@@ -36,7 +35,6 @@ import fashionoLogy from "../assets/fashionology.jpeg"
 
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const handleLogout = () => {
     localStorage.removeItem("userData");
     localStorage.removeItem("cartData")
