@@ -1,38 +1,101 @@
-# Fashionology
+# Fashionology(Clone of Anthropologie)
 
-A simple e-commerce demo project (backend + React frontend) for managing products, users and carts.
+FashionoLogy is an e-commerce platform that specializes in clothing. Users can register and explore a diverse range of trendy products, add them to their cart, and proceed to checkout. They can provide their payment and shipping information at checkout, and once the payment is processed, they will be redirected to the homepage.
 
-**Deployment**
-- **Backend:** https://fashionology-omega.vercel.app/
-- **Frontend:** https://frontend-one-tau-euwzts257k.vercel.app/
+# Getting Started
 
-**Quick Start**
+To begin with the project, you need to clone the repository onto your device.
 
-- **Backend:**
-	- **Install:** `cd backend` && `npm install`
-	- **Env:** create a `.env` file in `backend/` with:
-		- `mongoURL=<your-mongodb-connection-string>`
-	- **Run (dev):** `npm run server` (uses `nodemon index.js`)
-	- **Run (prod):** `node index.js`
+# Tech Stack
 
-- **Frontend:**
-	- **Install:** `cd frontend` && `npm install`
-	- **Run (dev):** `npm start`
-	- Add the frontend deployment URL above when ready.
+## Frontend
 
-**Tech Stack**
-- Backend: Node.js, Express, Mongoose
-- Frontend: React, Redux
+- HTML
+- CSS
+- JavaScript
+- React
+- React-Router-Dom
+- Redux
+- React-Redux
+- Chakra UI
+- Styled Components
 
-**Project Structure (top-level)**
-- `backend/` - Express API server and models
-- `frontend/` - React app and components
+## Backend
 
-**Important env vars**
-- Backend: `mongoURL` (used in `backend/configs/db.js`)
+### Vercel server
 
-**Notes**
-- The backend listens on port `8080` (see `backend/index.js`).
-- API base routes: `/users`, `/products`, `/cart` (see `backend/routes`).
+- https://fashionology-omega.vercel.app/
+- MongoDB
+- Node.js
 
-If you'd like, I can add example API endpoints, Postman collection, or fill in the frontend deployment URL for you.
+## Pages
+
+- Home Page
+- Signup and Login
+- Products Page
+- Product Description
+- Cart Page
+- Payment and Checkout Page
+- admin Page
+
+## Features
+
+- Home Page
+- Login and Signup - protected routes functionality.
+- Shopping Page - View Products by categories, filter, sort, and pagination functionality.
+- Product Description Page.
+- Cart Page - Add and delete from cart functionality.
+- Payment and Checkout Page.
+- Used Redux for centralizing logic and managing state.
+
+## Functionalities
+
+- Login and Registration.
+- View Products by categories.
+- Filter products.
+- Sort by Price.
+- Add to Cart.
+- Deleting from Cart.
+- Admin functionality for CRUD operations.
+- Payment.
+
+## Features to be implemented in the Future
+
+- Wishlist Page and functionality.
+- Order management on the admin side.
+
+## Contribution
+
+- Rishabh Roy
+- Samreen Inayat
+- kumkum Dutta
+- Prabhat Kumar
+
+## Deployed Link :- https://frontend-one-tau-euwzts257k.vercel.app/
+
+## screenshot
+
+## Home Page
+
+![Image](/frontend/public/Screenshot%202023-05-13%20131716.png)
+
+## Product page
+
+![Image](/frontend/public/Screenshot%202023-05-13%20131742.png)
+
+## Single Product Page
+
+![Image](/frontend/public/singleProduct.png)
+
+## Cart
+
+![Image](/frontend/public/cart.png)
+
+## Payment
+
+![Image](/frontend/public/payment.png)
+
+## Admin 
+![Image](/frontend/public/adminDashboard.png)
+![Image](/frontend/public/adminCard.png)
+![Image](/frontend/public/adminAddList.png)
