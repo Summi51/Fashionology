@@ -11,10 +11,8 @@ export const Productpage = () => {
 
   const [rating,setRating] = useState(0);
   const [page,setPage] = useState(1);
-  let c = false
-if(page<2){
-  c=true
-}
+  const limit = 6;
+  const prevDisabled = page <= 1;
     const location = useLocation();
     const { category } = queryString.parse(location.search);
     const [ab,setAb]=React.useState([]);
@@ -238,7 +236,7 @@ if(page<2){
             >
               {products.map((el) => (
                 <ProductCard
-                  key={el.id}
+                  key={el._id}
                   _id={el._id}
                   name={el.name}
                   images={el.images}
@@ -249,7 +247,7 @@ if(page<2){
           )}
 
           <Flex h="20vh" m="auto">
-            <Button
+              <Button
               px={4}
               fontSize={"sm"}
               rounded={"full"}
@@ -264,7 +262,7 @@ if(page<2){
               _focus={{
                 bg: "blue.500",
               }}
-              disabled={c}
+              disabled={prevDisabled}
               onClick={() => {
                 setPage(page - 1);
               }}
@@ -288,7 +286,7 @@ if(page<2){
               _focus={{
                 bg: "blue.500",
               }}
-              disabled={c}
+              disabled={products.length < limit}
               onClick={() => {
                 setPage(page + 1);
               }}

@@ -84,28 +84,58 @@ const SingleProduct = () => {
       cartProduct.brand = product.brand;
       cartProduct.description = product.description;
 
+      // check cart to prevent duplicate (by name + size)
       axios
-        .post(`${url}/cart/add`, cartProduct, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userData.token}`,
-          },
+        .get(`${url}/cart`, {
+          headers: { Authorization: `Bearer ${userData.token}` },
         })
-        .then((res) => {
-          toast({
-            title: "Product is added to cart",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-            variant: "left-accent",
-            containerStyle: {
-              fontSize: "22",
-              lineHeight: "10",
-              py: "6",
-            },
-          });
+        .then((cartRes) => {
+          const existing = Array.isArray(cartRes.data) ? cartRes.data : [];
+          const already = existing.some((item) => item.name === cartProduct.name && item.size === cartProduct.size);
+          if (already) {
+            toast({ title: "Product already in cart", status: "info", duration: 3000, isClosable: true });
+            return;
+          }
+
+          // not present — add
+          axios
+            .post(`${url}/cart/add`, cartProduct, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userData.token}`,
+              },
+            })
+            .then((res) => {
+              toast({
+                title: "Product is added to cart",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                variant: "left-accent",
+                containerStyle: {
+                  fontSize: "22",
+                  lineHeight: "10",
+                  py: "6",
+                },
+              });
+            })
+            .catch((err) => console.log(err));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // if we can't read cart, attempt add anyway
+          console.warn("Could not read cart before adding", err);
+          axios
+            .post(`${url}/cart/add`, cartProduct, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userData.token}`,
+              },
+            })
+            .then((res) => {
+              toast({ title: "Product is added to cart", status: "success", duration: 5000, isClosable: true });
+            })
+            .catch((err2) => console.log(err2));
+        });
     }
   };
 

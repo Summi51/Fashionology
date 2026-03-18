@@ -5,207 +5,184 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { editProduct } from "../../Redux/productsReducers/action";
 import Nav from "../../pages/AdminNavbar";
-// eve.holt@reqres.in
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductAdminEdit = () => {
   const { id } = useParams();
-  console.log(id);
-  const [data, setData] = useState("");
-  const [success, setSuccess] = useState(false);
-  //   const product = useSelector((store) =>{
-  // console.log(store.productsReducers.products);
-  //     store.productsReducers.products;
-
-  // })
-
+  const [data, setData] = useState({});
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-
-    setData((prev) => {
-      return { ...prev, [name]: value };
-    });
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
-    // console.log(data)
-    dispatch(editProduct(data, data._id)).then(() => {
-      setSuccess(true);
-    });
+    dispatch(editProduct(data, data._id))
+      .then(() => {
+        toast.success("Product updated successfully!");
+      })
+      .catch(() => {
+        toast.error("Failed to update product!");
+      });
   };
-
-  //   useEffect(() => {
-  //     const data = product.find((el) => el._id === id);
-  //     console.log(data);
-  //     setData(data);
-  //     // console.log(id);
-  //   }, []);
-
-  //   const datas = product.find((el) => el._id === id);
-  //   console.log(data);
-  //   setData(datas);
 
   useEffect(() => {
     axios
       .get(`https://fashionology-omega.vercel.app/products/${id}`)
-      .then((res) => {
-        // console.log(res.data);
-        setData(res.data);
-      })
+      .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, [id]);
 
-  console.log(data);
   return (
-    <DIVform style={{ height: "auto", width: "100%",  textAlign:'center'}}>
-       <Nav/>
-       
-      <h3 style={{ color: "#430707", fontSize: "20px",marginTop:'20px'}}>Edit Products: {id}</h3>
-      <h2 style={{ color: "red", fontSize: "30px", fontWeight: 'bold' }}>
-        {success && "Product Edit Successfully"}
-      </h2>
+    <PageWrapper>
+      <Nav />
+      <ToastContainer position="top-right" autoClose={2000} />
+      <ContentWrapper>
+        <FormWrapper>
+          <Title>Edit Product: {id}</Title>
 
-      <DIV>
-        <form onSubmit={handleEdit}>
-       
-          <input
-            text="text"
-            value={data?.images}
-            placeholder="Image"
-            onChange={handleChange}
-            name={"images"}
-          />
-        
-          <input
-            text="text"
-            value={data.name}
-            placeholder="Title"
-            onChange={handleChange}
-            name={"name"}
-          />
+          <form onSubmit={handleEdit}>
+            <FormGrid>
+              {[
+                { label: "Image URL", name: "images", type: "text" },
+                { label: "Title", name: "name", type: "text" },
+                { label: "Rating", name: "rating", type: "number" },
+                { label: "Price", name: "price", type: "number" },
+                { label: "Quantity", name: "quantity", type: "number" },
+                { label: "Color", name: "color", type: "text" },
+                { label: "Main Category", name: "mainCategory", type: "text" },
+                { label: "Sub Category", name: "subCategory", type: "text" },
+                { label: "Brand", name: "brand", type: "text" },
+              ].map((field) => (
+                <FormField key={field.name}>
+                  <label>{field.label}</label>
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    value={data[field.name] || ""}
+                    onChange={handleChange}
+                  />
+                </FormField>
+              ))}
 
-          <input
-            text="number"
-            value={data.rating}
-            placeholder="Rating"
-            onChange={handleChange}
-            name={"rating"}
-          />
+              <FormField>
+                <label>Sizes</label>
+                <select
+                  name="sizes"
+                  value={data.sizes || ""}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Size</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </FormField>
 
-          <input
-            text="number"
-            value={data.price}
-            placeholder="Price"
-            onChange={handleChange}
-            name={"price"}
-          />
+              <FormField style={{ gridColumn: "1 / -1" }}>
+                <label>Description</label>
+                <textarea
+                  name="description"
+                  value={data.description || ""}
+                  onChange={handleChange}
+                  placeholder="Description"
+                />
+              </FormField>
+            </FormGrid>
 
-          <select name={"sizes"} id="" onChange={handleChange}>
-            <option value="">Select Sizes</option>
-            <option value="S">S</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-            <option value="XS">XS</option>
-          </select>
-
-          <input
-            text="number"
-            value={data.quantity}
-            placeholder="Quantity"
-            onChange={handleChange}
-            name={"quantity"}
-          />
-
-          <input
-            text="text"
-            value={data.color}
-            placeholder="Color"
-            onChange={handleChange}
-            name={"color"}
-          />
-
-          <input
-            text="text"
-            value={data.mainCategory}
-            placeholder="MainCategory"
-            onChange={handleChange}
-            name={"mainCategory"}
-          />
-
-          <input
-            text="text"
-            value={data.subCategory}
-            placeholder="SubCategory"
-            onChange={handleChange}
-            name={"subCategory"}
-          />
-
-          <input
-            text="text"
-            value={data.brand}
-            placeholder="Brand"
-            onChange={handleChange}
-            name={"brand"}
-          />
-
-          <input
-            text="text"
-            value={data.description}
-            placeholder="Description"
-            onChange={handleChange}
-            name={"description"}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </DIV>
-    </DIVform>
+            <SubmitButton type="submit">Update Product</SubmitButton>
+          </form>
+        </FormWrapper>
+      </ContentWrapper>
+    </PageWrapper>
   );
 };
 
 export default ProductAdminEdit;
 
-const DIVform = styled.div``
+/* ================= STYLES ================= */
+const PageWrapper = styled.div`
+  background: #f9f9fb;
+  min-height: 100vh;
+`;
 
-const DIV = styled.div`
-  width: 900px;
-  height: auto;
-  background-color: lightgray;
-  margin: 40px auto;
-  border: 1px solid gray;
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   padding: 20px;
+`;
 
-  input {
-    width: 80%;
-    height: 50px;
-    border-radius:4px;
-    border:1px solid gray;
-    font-size: larger;
-  }
-  button {
-    width: 20%;
-    border:1px solid black;
-    color: white;
-    border-radius:4px;
-    background-color:#430707;
-    height: 50px;
+const FormWrapper = styled.div`
+  flex: 1;
+  max-width: 900px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(163, 160, 226, 0.15);
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  color: #a3a0e2;
+  margin-bottom: 20px;
+`;
+
+const FormGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+`;
+
+const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-weight: 600;
+    color: #333;
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    border: 1px solid #a3a0e2;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: #5b57c4;
+      box-shadow: 0 0 4px #a3a0e2;
+    }
   }
 
-  select {
-    width: 80%;
-    height: 30px;
-    height: 50px;
-    border-radius:4px;
-    font-size: larger;
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+`;
+
+const SubmitButton = styled.button`
+  margin-top: 30px;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #a3a0e2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #7d79d9;
   }
 `;

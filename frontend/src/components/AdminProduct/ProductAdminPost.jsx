@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Nav from "../../pages/AdminNavbar";
 import AdminSidebar from "../../pages/AdminSidebar/AdminSidebar";
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 const initialState = {
   name: "",
   rating: 0,
@@ -21,22 +22,17 @@ const initialState = {
 
 const ProductAdminPost = () => {
   const [product, setProduct] = useState(initialState);
-
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    // console.log(e)
-
     const { name, value } = e.target;
-    setProduct((prev) => {
-      return { ...prev, [name]: value };
-    });
+    setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  let userData = JSON.parse(localStorage.getItem("userData")) || [];
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(product, userData.token)
     axios
       .post("https://fashionology-omega.vercel.app/products/add", product, {
         headers: {
@@ -44,328 +40,165 @@ const ProductAdminPost = () => {
           Authorization: `Bearer ${userData.token}`,
         },
       })
-      .then((res) => console.log(res.data));
-    alert("Products Added Successfully");
-    // dispatch(addProducts(product));
-    // console.log(product)
-
-    setProduct(initialState);
+      .then(() => {
+        toast.success("Product added successfully!");
+        setProduct(initialState);
+      })
+      .catch((err) => console.log(err));
   };
+
   return (
-    <DIVform style={{ width: "100%", textAlign: "center" }}>
+    <PageWrapper>
       <Nav />
-      <h2
-        style={{
-          color: "#430707",
-          fontSize: "30px",
-          fontWeight: "bold",
-          marginBottom:"20px",
-          marginTop: "20px",
-        }}
-      >
-        Add Products Page
-      </h2>
-
-      <DIVFormData>
-        <DIVS>
+           <ToastContainer position="top-right" autoClose={2000} />
+      <ContentWrapper>
+        <Sidebar>
           <AdminSidebar />
-        </DIVS>
-        <DIVF>
+        </Sidebar>
+
+        <FormWrapper>
+          <Title>Add New Product</Title>
           <form onSubmit={handleSubmit}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Image :</span>
-              <input
-                text="text"
-                value={product.images}
-                placeholder="Image"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="images"
-              />
-            </div>
+            <FormGrid>
+              {[
+                { label: "Image URL", name: "images", type: "text", placeholder: "Image URL" },
+                { label: "Title", name: "name", type: "text", placeholder: "Product Name" },
+                { label: "Rating", name: "rating", type: "number", placeholder: "Rating" },
+                { label: "Price", name: "price", type: "number", placeholder: "Price" },
+                { label: "Quantity", name: "quantity", type: "number", placeholder: "Quantity" },
+                { label: "Color", name: "color", type: "text", placeholder: "Color" },
+                { label: "Main Category", name: "mainCategory", type: "text", placeholder: "Main Category" },
+                { label: "Sub Category", name: "subCategory", type: "text", placeholder: "Sub Category" },
+                { label: "Brand", name: "brand", type: "text", placeholder: "Brand" },
+              ].map((field) => (
+                <FormField key={field.name}>
+                  <label>{field.label}</label>
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    value={product[field.name]}
+                    placeholder={field.placeholder}
+                    onChange={handleChange}
+                  />
+                </FormField>
+              ))}
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Title :</span>
-              <input
-                text="text"
-                value={product.name}
-                placeholder="Title"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="name"
-              />
-            </div>
+              <FormField>
+                <label>Sizes</label>
+                <select name="sizes" value={product.sizes} onChange={handleChange}>
+                  <option value="">Select Size</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </FormField>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Rate:</span>
-              <input
-                text="number"
-                value={product.rating}
-                placeholder="Rating"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="rating"
-              />
-            </div>
+              <FormField style={{ gridColumn: "1 / -1" }}>
+                <label>Description</label>
+                <textarea
+                  name="description"
+                  value={product.description}
+                  placeholder="Description"
+                  onChange={handleChange}
+                />
+              </FormField>
+            </FormGrid>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Price :</span>
-              <input
-                text="number"
-                value={product.price}
-                placeholder="Price"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="price"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Sizes :</span>
-
-              <select
-                name="sizes"
-                id=""
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              >
-                <option value="">Select Sizes</option>
-                <option value="S">S</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
-                <option value="XS">XS</option>
-              </select>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>Quantity:</span>
-              <input
-                text="number"
-                value={product.quantity}
-                placeholder="Quantity"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="quantity"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>Color :</span>
-              <input
-                text="text"
-                value={product.color}
-                placeholder="Color"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="color"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>MainCat:</span>
-              <input
-                text="text"
-                value={product.mainCategory}
-                placeholder="MainCategory"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="mainCategory"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>SubCat :</span>
-              <input
-                text="text"
-                value={product.subCategory}
-                placeholder="SubCategory"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="subCategory"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>Brand :</span>
-              <input
-                text="text"
-                value={product.brand}
-                placeholder="Brand"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="brand"
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                width: "100%",
-                fontSize: "16px",
-              }}
-            >
-              <span>Desc :</span>
-              <input
-                text="text"
-                value={product.description}
-                placeholder="Description"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                name="description"
-              />
-            </div>
-
-            <button type="submit">Submit</button>
+            <SubmitButton type="submit">Add Product</SubmitButton>
           </form>
-        </DIVF>
-      </DIVFormData>
-    </DIVform>
+        </FormWrapper>
+      </ContentWrapper>
+    </PageWrapper>
   );
 };
 
 export default ProductAdminPost;
 
-const DIVform = styled.div`
-  height: auto;
+/* ================= STYLES ================= */
+
+const PageWrapper = styled.div`
+  background: #f9f9fb;
+  min-height: 100vh;
 `;
 
-const DIVS = styled.div`
-  width: 15%;
-
-  margin-bottom: 50px;
-`;
-
-const DIVF = styled.div`
-  width: 80%;
-  margin-bottom: 50px;
-  padding-top: 50px;
-  background-color: lightgray;
-  border: 1px solid gray;
-
-  select {
-    width: 80%;
-
-    height: 50px;
-    border-radius: 4px;
-    font-size: larger;
-  }
-
-  button {
-    width: 20%;
-    border: 1px solid black;
-    color: white;
-    margin-bottom:20px;
-    border-radius: 4px;
-    background-color: #430707;
-    height: 50px;
-  }
-
-  input {
-    width: 80%;
-    height: 50px;
-    border-radius: 4px;
-    border: 1px solid gray;
-    font-size: larger;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
-`;
-
-const DIVFormData = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 90%;
+  padding: 20px;
+  gap: 20px;
+`;
+
+const Sidebar = styled.div`
+  flex: 0 0 220px;
+`;
+
+const FormWrapper = styled.div`
+  flex: 1;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(163, 160, 226, 0.15);
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  color: #a3a0e2;
+  margin-bottom: 35px;
+  font-size: 28px;
+`;
+
+const FormGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+`;
+
+const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-weight: 600;
+    color: #333;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    border: 1px solid #a3a0e2;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: #5b57c4;
+      box-shadow: 0 0 4px #a3a0e2;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+`;
+
+const SubmitButton = styled.button`
+  margin-top: 30px;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #a3a0e2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #7d79d9;
+  }
 `;
