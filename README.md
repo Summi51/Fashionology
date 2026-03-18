@@ -64,13 +64,6 @@ To begin with the project, you need to clone the repository onto your device.
 - Wishlist Page and functionality.
 - Order management on the admin side.
 
-## Contribution
-
-- Rishabh Roy
-- Samreen Inayat
-- kumkum Dutta
-- Prabhat Kumar
-
 ## Deployed Link :- https://frontend-one-tau-euwzts257k.vercel.app/
 
 ## screenshot
