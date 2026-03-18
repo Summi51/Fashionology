@@ -4,7 +4,7 @@ A simple e-commerce demo project (backend + React frontend) for managing product
 
 **Deployment**
 - **Backend:** https://fashionology-omega.vercel.app/
-- **Frontend:** (frontend deployment URL placeholder)
+- **Frontend:** https://frontend-mu-nine-t0qqyaa5jc.vercel.app/
 
 **Quick Start**
 
