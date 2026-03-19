@@ -1,4 +1,4 @@
-# Fashionology(Clone of Anthropologie)
+# Fashionology(Clone of Ajio)
 
 FashionoLogy is an e-commerce platform that specializes in clothing. Users can register and explore a diverse range of trendy products, add them to their cart, and proceed to checkout. They can provide their payment and shipping information at checkout, and once the payment is processed, they will be redirected to the homepage.
 
